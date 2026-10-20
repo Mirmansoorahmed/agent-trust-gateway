@@ -1,0 +1,143 @@
+# Lab configuration for Docker Compose. The eval harness builds the same
+# policy view with localhost URLs. Attack servers are connected on purpose:
+# poison is allowlisted so the linter has to catch it, rug is allowlisted so
+# drift detection has a pin to compare, shadow is not allowlisted.
+
+gateway_audience: agent-trust-gateway
+max_token_ttl_seconds: 600
+downstream_ttl_seconds: 60
+oidc_issuer: http://mock-oidc:8080/agents
+oidc_jwks_url: http://mock-oidc:8080/agents/jwks
+auth_issuer_url: http://mock-oidc:8080/agents
+opa_url: http://opa:8181
+resource_server_url: http://gateway:8080/mcp
+approver_token: lab-approver
+approval_rate_limit: 8
+manifest_path: /data/manifests.json
+approval_path: /data/approvals.json
+span_path: /data/spans.jsonl
+otlp_endpoint: http://otel-collector:4318
+
+recipient_allowlist:
+  - lena.vogel@nordlicht.example
+  - jonas.berg@nordlicht.example
+  - mira.hoff@nordlicht.example
+
+agents:
+  mail-assistant:
+    allowed_tools:
+      - mail.list_inbox
+      - mail.get_email
+      - mail.search_email
+      - mail.send_email
+  repo-assistant:
+    allowed_tools:
+      - repo.list_issues
+      - repo.get_issue
+      - repo.list_files
+      - repo.get_file
+      - repo.create_issue
+  research-assistant:
+    allowed_tools:
+      - web.fetch_page
+      - web.search_docs
+      - injection.fetch_page
+      - mail.send_email
+      - repo.get_issue
+      - repo.get_file
+  notes-assistant:
+    allowed_tools:
+      - rug.save_note
+  poison-victim:
+    allowed_tools:
+      - poison.export_contacts
+      - poison.export_hidden
+      - poison.export_zwsp
+  shadow-victim:
+    allowed_tools:
+      - shadow.address_book
+      - shadow.send_email
+      - mail.send_email
+  audit-assistant:
+    allowed_tools:
+      - tokenreplay.whoami
+
+servers:
+  - id: mail
+    url: http://mail:8000/mcp
+    allowlisted: true
+    tool_labels:
+      list_inbox: [sensitive]
+      get_email: [sensitive]
+      search_email: [sensitive]
+      send_email: [sensitive, outbound]
+    tool_scopes:
+      list_inbox: mail.read
+      get_email: mail.read
+      search_email: mail.read
+      send_email: mail.send
+  - id: repo
+    url: http://repo:8000/mcp
+    allowlisted: true
+    tool_labels:
+      list_issues: [sensitive]
+      get_issue: [sensitive]
+      list_files: [sensitive]
+      get_file: [sensitive]
+      create_issue: [sensitive]
+    tool_scopes:
+      list_issues: repo.read
+      get_issue: repo.read
+      list_files: repo.read
+      get_file: repo.read
+      create_issue: repo.write
+  - id: web
+    url: http://web:8000/mcp
+    allowlisted: true
+    tool_labels:
+      fetch_page: [untrusted]
+      search_docs: [untrusted]
+    tool_scopes:
+      fetch_page: web.read
+      search_docs: web.read
+  - id: poison
+    url: http://poison:8000/mcp
+    allowlisted: true
+    tool_labels:
+      export_contacts: [sensitive]
+      export_hidden: [sensitive]
+      export_zwsp: [sensitive]
+    tool_scopes:
+      export_contacts: poison.read
+      export_hidden: poison.read
+      export_zwsp: poison.read
+  - id: rug
+    url: http://rug:8000/mcp
+    allowlisted: true
+    tool_labels:
+      save_note: [sensitive]
+    tool_scopes:
+      save_note: notes.write
+  - id: shadow
+    url: http://shadow:8000/mcp
+    allowlisted: false
+    tool_labels:
+      address_book: [sensitive]
+      send_email: [sensitive, outbound]
+    tool_scopes:
+      address_book: mail.read
+      send_email: mail.send
+  - id: injection
+    url: http://injection:8000/mcp
+    allowlisted: true
+    tool_labels:
+      fetch_page: [untrusted]
+    tool_scopes:
+      fetch_page: web.read
+  - id: tokenreplay
+    url: http://tokenreplay:8000/mcp
+    allowlisted: true
+    tool_labels:
+      whoami: []
+    tool_scopes:
+      whoami: audit.read

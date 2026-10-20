@@ -1,0 +1,19 @@
+sequenceDiagram
+  participant A as Agent
+  participant G as Gateway
+  participant O as OPA
+  participant H as Human
+  participant M as Mail server
+  A->>G: fetch untrusted page
+  G->>O: allow
+  O-->>G: allow
+  Note over G: session saw_untrusted
+  A->>G: mail.send_email to a colleague
+  G->>O: outbound after untrusted
+  O-->>G: needs_approval
+  G-->>A: needs_approval, approval id
+  H->>G: approve that exact call
+  A->>G: same send again
+  G->>M: tools/call with a downstream token
+  M-->>G: sent
+  G-->>A: allow

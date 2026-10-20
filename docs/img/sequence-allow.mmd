@@ -1,0 +1,15 @@
+sequenceDiagram
+  participant A as Agent
+  participant G as Gateway
+  participant O as OPA
+  participant S as MCP server
+  A->>G: tools/call mail.list_inbox, agent token
+  G->>G: check iss, aud, exp, scope, agent_id
+  G->>S: tools/list with a downstream token
+  S-->>G: catalogue
+  G->>G: compare SHA-256 with the pin
+  G->>O: input document
+  O-->>G: allow
+  G->>S: tools/call with a new downstream token
+  S-->>G: inbox
+  G-->>A: allow, plus the decision trace

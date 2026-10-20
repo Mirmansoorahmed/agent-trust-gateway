@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="640" viewBox="0 0 1100 640">
+  <style>
+    .box { fill: #f4f7fb; stroke: #1f3a5f; stroke-width: 1.5; }
+    .accent { fill: #102a43; }
+    .label { font-family: "IBM Plex Sans", "Segoe UI", sans-serif; font-size: 15px; fill: #102a43; }
+    .small { font-family: "IBM Plex Sans", "Segoe UI", sans-serif; font-size: 13px; fill: #f4f7fb; }
+    .tiny { font-family: "IBM Plex Sans", "Segoe UI", sans-serif; font-size: 13px; fill: #334e68; }
+    .title { font-family: "IBM Plex Sans", "Segoe UI", sans-serif; font-size: 20px; fill: #102a43; font-weight: 700; }
+  </style>
+  <rect width="1100" height="640" fill="#ffffff"/>
+  <text x="40" y="40" class="title">Agent Trust Gateway</text>
+  <text x="40" y="64" class="tiny">Agent token stops at the gateway. Each server gets its own short-lived token.</text>
+  <rect x="40" y="100" width="200" height="70" rx="8" class="box"/>
+  <text x="140" y="140" text-anchor="middle" class="label">Agent</text>
+  <rect x="40" y="200" width="200" height="70" rx="8" class="box"/>
+  <text x="140" y="240" text-anchor="middle" class="label">Mock OIDC</text>
+  <rect x="320" y="90" width="420" height="360" rx="10" fill="#e8eef6" stroke="#102a43" stroke-width="1.5"/>
+  <text x="530" y="118" text-anchor="middle" class="label">Trust Gateway</text>
+  <rect x="350" y="140" width="360" height="42" rx="6" class="accent"/>
+  <text x="530" y="166" text-anchor="middle" class="small">1. Validate iss, aud, exp, scope, agent id</text>
+  <rect x="350" y="194" width="360" height="42" rx="6" class="accent"/>
+  <text x="530" y="220" text-anchor="middle" class="small">2. Pin the tool list, block on drift</text>
+  <rect x="350" y="248" width="360" height="42" rx="6" class="accent"/>
+  <text x="530" y="274" text-anchor="middle" class="small">3. Label untrusted, sensitive, outbound</text>
+  <rect x="350" y="302" width="360" height="42" rx="6" class="accent"/>
+  <text x="530" y="328" text-anchor="middle" class="small">4. OPA allow / deny / needs approval</text>
+  <rect x="350" y="356" width="360" height="42" rx="6" class="accent"/>
+  <text x="530" y="382" text-anchor="middle" class="small">5. Mint a downstream token for that server</text>
+  <rect x="800" y="110" width="250" height="56" rx="8" class="box"/>
+  <text x="925" y="142" text-anchor="middle" class="label">Mail, repo, web</text>
+  <rect x="800" y="190" width="250" height="56" rx="8" class="box"/>
+  <text x="925" y="222" text-anchor="middle" class="label">Attack servers</text>
+  <rect x="800" y="280" width="250" height="56" rx="8" class="box"/>
+  <text x="925" y="312" text-anchor="middle" class="label">OPA</text>
+  <rect x="800" y="360" width="250" height="56" rx="8" class="box"/>
+  <text x="925" y="392" text-anchor="middle" class="label">Approval queue</text>
+  <rect x="320" y="490" width="420" height="70" rx="8" class="box"/>
+  <text x="530" y="530" text-anchor="middle" class="label">OpenTelemetry collector and Jaeger</text>
+  <path d="M240 135 H320" stroke="#102a43" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+  <path d="M240 235 H320" stroke="#102a43" stroke-width="1.6" fill="none"/>
+  <path d="M740 160 H800" stroke="#102a43" stroke-width="1.6" fill="none"/>
+  <path d="M740 320 H800" stroke="#102a43" stroke-width="1.6" fill="none"/>
+  <path d="M530 450 V490" stroke="#102a43" stroke-width="1.6" fill="none"/>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#102a43"/>
+    </marker>
+  </defs>
+</svg>

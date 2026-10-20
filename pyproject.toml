@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-trust-gateway"
+version = "0.1.0"
+description = "Zero-trust policy enforcement point between AI agents and MCP servers."
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+authors = [{ name = "Mir Mansoor Ahmed" }]
+dependencies = [
+    "mcp==2.3.0",
+    "fastapi==0.149.0",
+    "uvicorn==0.54.0",
+    "httpx==0.28.1",
+    "PyJWT[crypto]==2.15.1",
+    "cryptography==50.0.2",
+    "opentelemetry-api==1.45.1",
+    "opentelemetry-sdk==1.45.1",
+    "opentelemetry-exporter-otlp-proto-http==1.45.1",
+    "langgraph==1.2.16",
+    "pyyaml==6.0.3",
+    "matplotlib==3.11.2",
+    "anthropic==0.72.0",
+    "google-genai==1.45.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest==8.4.2", "pytest-asyncio==1.2.0", "ruff==0.14.2"]
+
+[project.scripts]
+atg = "gateway.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["gateway*", "servers*", "agents*", "eval*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+markers = [
+    "integration: starts OPA and local MCP servers",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+"eval/render.py" = ["E501"]
+"gateway/ui.py" = ["E501"]
