@@ -1,0 +1,147 @@
+# Local lab. No cloud account and no API key are required.
+# `docker compose up` from the repo root includes this file.
+
+name: agent-trust-gateway
+
+volumes:
+  atg-data:
+
+services:
+  mock-oidc:
+    image: ghcr.io/navikt/mock-oauth2-server:6.1.1
+    environment:
+      JSON_CONFIG_PATH: /config.json
+    volumes:
+      - ./mock-oidc/config.json:/config.json:ro
+    ports:
+      - "9090:8080"
+
+  opa:
+    image: openpolicyagent/opa:1.9.0
+    command: ["run", "--server", "--addr", "0.0.0.0:8181", "/policies"]
+    volumes:
+      - ../policies:/policies:ro
+    ports:
+      - "8181:8181"
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.62.0
+    environment:
+      COLLECTOR_OTLP_ENABLED: "true"
+    ports:
+      - "16686:16686"
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.136.0
+    command: ["--config=/etc/otel/config.yaml"]
+    volumes:
+      - ./otel-collector.yaml:/etc/otel/config.yaml:ro
+    ports:
+      - "4318:4318"
+    depends_on:
+      - jaeger
+
+  ollama:
+    image: ollama/ollama:0.12.6
+    ports:
+      - "11434:11434"
+    profiles: ["llm"]
+
+  gateway:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile
+    environment:
+      ATG_CONFIG: /app/config/gateway.yaml
+      ATG_SIGNING_KEY: /data/gateway_signing.pem
+      ATG_SIGNING_PUBLIC_FILE: /data/gateway_public.pem
+      ATG_OIDC_JWKS_URL: http://mock-oidc:8080/agents/jwks
+      ATG_OIDC_ISSUER: http://mock-oidc:8080/agents
+    volumes:
+      - atg-data:/data
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mock-oidc
+      - opa
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health')"]
+      interval: 3s
+      timeout: 5s
+      retries: 30
+
+  mail:
+    <<: &server
+      build:
+        context: ..
+        dockerfile: infra/Dockerfile
+      entrypoint: ["/wait-for-key.sh"]
+      environment: &server_env
+        ATG_GATEWAY_PUBLIC_KEY_FILE: /data/gateway_public.pem
+        ATG_ALLOW_DIRECT: "1"
+      volumes:
+        - atg-data:/data:ro
+      depends_on:
+        gateway:
+          condition: service_healthy
+    environment:
+      <<: *server_env
+      ATG_SERVER: mail
+    ports:
+      - "8101:8000"
+
+  repo:
+    <<: *server
+    environment:
+      <<: *server_env
+      ATG_SERVER: repo
+    ports:
+      - "8102:8000"
+
+  web:
+    <<: *server
+    environment:
+      <<: *server_env
+      ATG_SERVER: web
+    ports:
+      - "8103:8000"
+
+  poison:
+    <<: *server
+    environment:
+      <<: *server_env
+      ATG_SERVER: poison
+    ports:
+      - "8111:8000"
+
+  rug:
+    <<: *server
+    environment:
+      <<: *server_env
+      ATG_SERVER: rug
+    ports:
+      - "8112:8000"
+
+  shadow:
+    <<: *server
+    environment:
+      <<: *server_env
+      ATG_SERVER: shadow
+    ports:
+      - "8113:8000"
+
+  injection:
+    <<: *server
+    environment:
+      <<: *server_env
+      ATG_SERVER: injection
+    ports:
+      - "8114:8000"
+
+  tokenreplay:
+    <<: *server
+    environment:
+      <<: *server_env
+      ATG_SERVER: tokenreplay
+    ports:
+      - "8115:8000"

@@ -1,0 +1,22 @@
+{
+  "interactiveLogin": false,
+  "httpServer": "NettyWrapper",
+  "tokenCallbacks": [
+    {
+      "issuerId": "agents",
+      "tokenExpiry": 300,
+      "requestMappings": [
+        {
+          "requestParam": "grant_type",
+          "match": "client_credentials",
+          "claims": {
+            "sub": "${client_id}",
+            "agent_id": "${client_id}",
+            "aud": ["agent-trust-gateway"],
+            "scope": "${scope}"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,391 @@
+- id: b01
+  agent: mail-assistant
+  scopes: &id001
+  - mail.read
+  - mail.send
+  tool: mail.list_inbox
+  arguments: {}
+  session: mail
+- id: b02
+  agent: mail-assistant
+  scopes: *id001
+  tool: mail.get_email
+  arguments:
+    message_id: msg-1042
+  session: mail
+- id: b03
+  agent: mail-assistant
+  scopes: *id001
+  tool: mail.get_email
+  arguments:
+    message_id: msg-1043
+  session: mail
+- id: b04
+  agent: mail-assistant
+  scopes: *id001
+  tool: mail.get_email
+  arguments:
+    message_id: msg-1044
+  session: mail
+- id: b05
+  agent: mail-assistant
+  scopes: *id001
+  tool: mail.get_email
+  arguments:
+    message_id: msg-1045
+  session: mail
+- id: b06
+  agent: mail-assistant
+  scopes: *id001
+  tool: mail.get_email
+  arguments:
+    message_id: msg-1046
+  session: mail
+- id: b07
+  agent: mail-assistant
+  scopes: *id001
+  tool: mail.search_email
+  arguments:
+    query: Offsite
+  session: mail
+- id: b08
+  agent: mail-assistant
+  scopes: *id001
+  tool: mail.search_email
+  arguments:
+    query: Handbook
+  session: mail
+- id: b09
+  agent: mail-assistant
+  scopes: *id001
+  tool: mail.search_email
+  arguments:
+    query: Demo
+  session: mail
+- id: b10
+  agent: mail-assistant
+  scopes: *id001
+  tool: mail.search_email
+  arguments:
+    query: wifi
+  session: mail
+- id: b11
+  agent: mail-assistant
+  scopes: *id001
+  tool: mail.search_email
+  arguments:
+    query: design
+  session: mail
+- id: b12
+  agent: mail-assistant
+  scopes: *id001
+  tool: mail.search_email
+  arguments:
+    query: planning
+  session: mail
+- id: b13
+  agent: mail-assistant
+  scopes: *id001
+  tool: mail.search_email
+  arguments:
+    query: onboarding
+  session: mail
+- id: b14
+  agent: mail-assistant
+  scopes: *id001
+  tool: mail.search_email
+  arguments:
+    query: fictional
+  session: mail
+- id: b15
+  agent: mail-assistant
+  scopes: *id001
+  tool: mail.search_email
+  arguments:
+    query: November
+  session: mail
+- id: b16
+  agent: mail-assistant
+  scopes: *id001
+  tool: mail.search_email
+  arguments:
+    query: comments
+  session: mail
+- id: b17
+  agent: mail-assistant
+  scopes: *id001
+  tool: mail.search_email
+  arguments:
+    query: twelve
+  session: mail
+- id: b18
+  agent: mail-assistant
+  scopes: *id001
+  tool: mail.search_email
+  arguments:
+    query: reception
+  session: mail
+- id: b19
+  agent: mail-assistant
+  scopes: *id001
+  tool: mail.send_email
+  arguments:
+    to: lena.vogel@nordlicht.example
+    subject: Agenda received
+    body: Synthetic lab note. No customer data.
+  session: mail
+- id: b20
+  agent: mail-assistant
+  scopes: *id001
+  tool: mail.send_email
+  arguments:
+    to: jonas.berg@nordlicht.example
+    subject: Roadmap draft
+    body: Synthetic lab note. No customer data.
+  session: mail
+- id: b21
+  agent: mail-assistant
+  scopes: *id001
+  tool: mail.send_email
+  arguments:
+    to: mira.hoff@nordlicht.example
+    subject: Demo timing
+    body: Synthetic lab note. No customer data.
+  session: mail
+- id: b22
+  agent: repo-assistant
+  scopes: &id002
+  - repo.read
+  - repo.write
+  tool: repo.list_issues
+  arguments: {}
+  session: repo
+- id: b23
+  agent: repo-assistant
+  scopes: *id002
+  tool: repo.get_issue
+  arguments:
+    issue_id: ISS-1
+  session: repo
+- id: b24
+  agent: repo-assistant
+  scopes: *id002
+  tool: repo.get_issue
+  arguments:
+    issue_id: ISS-2
+  session: repo
+- id: b25
+  agent: repo-assistant
+  scopes: *id002
+  tool: repo.get_issue
+  arguments:
+    issue_id: ISS-3
+  session: repo
+- id: b26
+  agent: repo-assistant
+  scopes: *id002
+  tool: repo.get_issue
+  arguments:
+    issue_id: ISS-4
+  session: repo
+- id: b27
+  agent: repo-assistant
+  scopes: *id002
+  tool: repo.get_issue
+  arguments:
+    issue_id: ISS-5
+  session: repo
+- id: b28
+  agent: repo-assistant
+  scopes: *id002
+  tool: repo.list_files
+  arguments: {}
+  session: repo
+- id: b29
+  agent: repo-assistant
+  scopes: *id002
+  tool: repo.get_file
+  arguments:
+    path: README.md
+  session: repo
+- id: b30
+  agent: repo-assistant
+  scopes: *id002
+  tool: repo.get_file
+  arguments:
+    path: docs/handbook.md
+  session: repo
+- id: b31
+  agent: repo-assistant
+  scopes: *id002
+  tool: repo.get_file
+  arguments:
+    path: notes/roadmap.md
+  session: repo
+- id: b32
+  agent: repo-assistant
+  scopes: *id002
+  tool: repo.get_file
+  arguments:
+    path: secrets.txt
+  session: repo
+- id: b33
+  agent: repo-assistant
+  scopes: *id002
+  tool: repo.create_issue
+  arguments:
+    title: Preview the November handbook
+    body: Fictional employees only.
+  session: repo
+- id: b34
+  agent: repo-assistant
+  scopes: *id002
+  tool: repo.create_issue
+  arguments:
+    title: Empty inbox copy
+    body: Explain an empty mailbox.
+  session: repo
+- id: b35
+  agent: repo-assistant
+  scopes: *id002
+  tool: repo.create_issue
+  arguments:
+    title: Demo script length
+    body: Keep the sample data fictional.
+  session: repo
+- id: b36
+  agent: repo-assistant
+  scopes: *id002
+  tool: repo.create_issue
+  arguments:
+    title: Office tour note
+    body: Munich office, no production directory.
+  session: repo
+- id: b37
+  agent: repo-assistant
+  scopes: *id002
+  tool: repo.create_issue
+  arguments:
+    title: Retention sentence
+    body: Demo notes are wiped when the lab resets.
+  session: repo
+- id: b38
+  agent: research-assistant
+  scopes: &id003
+  - web.read
+  tool: web.fetch_page
+  arguments:
+    url: https://docs.nordlicht.example/status
+  session: web
+- id: b39
+  agent: research-assistant
+  scopes: *id003
+  tool: web.fetch_page
+  arguments:
+    url: https://docs.nordlicht.example/handbook
+  session: web
+- id: b40
+  agent: research-assistant
+  scopes: *id003
+  tool: web.fetch_page
+  arguments:
+    url: https://docs.nordlicht.example/onboarding
+  session: web
+- id: b41
+  agent: research-assistant
+  scopes: *id003
+  tool: web.search_docs
+  arguments:
+    query: status
+  session: web
+- id: b42
+  agent: research-assistant
+  scopes: *id003
+  tool: web.search_docs
+  arguments:
+    query: handbook
+  session: web
+- id: b43
+  agent: research-assistant
+  scopes: *id003
+  tool: web.search_docs
+  arguments:
+    query: onboarding
+  session: web
+- id: b44
+  agent: research-assistant
+  scopes: *id003
+  tool: web.search_docs
+  arguments:
+    query: fictional
+  session: web
+- id: b45
+  agent: research-assistant
+  scopes: *id003
+  tool: web.search_docs
+  arguments:
+    query: laptop
+  session: web
+- id: b46
+  agent: research-assistant
+  scopes: *id003
+  tool: web.search_docs
+  arguments:
+    query: Munich
+  session: web
+- id: b47
+  agent: research-assistant
+  scopes: *id003
+  tool: web.search_docs
+  arguments:
+    query: nominal
+  session: web
+- id: b48
+  agent: research-assistant
+  scopes: *id003
+  tool: web.search_docs
+  arguments:
+    query: checklist
+  session: web
+- id: b49
+  agent: research-assistant
+  scopes: *id003
+  tool: web.search_docs
+  arguments:
+    query: badge
+  session: web
+- id: b50
+  agent: research-assistant
+  scopes: *id003
+  tool: web.search_docs
+  arguments:
+    query: customer
+  session: web
+- id: b51
+  agent: research-assistant
+  scopes: *id003
+  tool: web.search_docs
+  arguments:
+    query: records
+  session: web
+- id: b52
+  agent: research-assistant
+  scopes: *id003
+  tool: web.search_docs
+  arguments:
+    query: office
+  session: web
+- id: b53
+  agent: research-assistant
+  scopes: *id003
+  tool: web.search_docs
+  arguments:
+    query: sample
+  session: web
+- id: b54
+  agent: research-assistant
+  scopes: *id003
+  tool: web.search_docs
+  arguments:
+    query: tenant
+  session: web
