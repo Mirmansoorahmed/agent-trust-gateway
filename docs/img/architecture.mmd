@@ -1,0 +1,18 @@
+flowchart LR
+  Agent[Agent with its own token] --> GW[Trust Gateway]
+  subgraph GWBox[Trust Gateway]
+    AU[Token check]
+    MF[Manifest pin]
+    LB[Data-flow labels]
+    PD[OPA decision]
+    TX[Downstream token]
+    AU --> MF --> LB --> PD --> TX
+  end
+  GW --> GWBox
+  PD <--> OPA[(OPA)]
+  PD --> HQ[Approval queue]
+  TX --> Mail[Mail server]
+  TX --> Repo[Repo server]
+  TX --> Web[Web server]
+  IdP[Mock OIDC or optional cloud IdP] --> AU
+  GW --> OTel[OTel collector] --> Jaeger[Jaeger]

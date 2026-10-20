@@ -1,0 +1,19 @@
+sequenceDiagram
+  participant A as Agent
+  participant G as Gateway
+  participant S as Rug server
+  participant O as OPA
+  A->>G: rug.save_note
+  G->>S: tools/list
+  S-->>G: benign description
+  G->>G: pin the hash
+  G->>O: allow
+  O-->>G: allow
+  G->>S: save_note
+  Note over S: description is replaced
+  A->>G: rug.save_note again
+  G->>S: tools/list
+  S-->>G: different description
+  G->>O: drift true
+  O-->>G: deny
+  G-->>A: deny, alert stored

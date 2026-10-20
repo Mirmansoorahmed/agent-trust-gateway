@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="540" viewBox="0 0 980 540">
+  <style>
+    text { font-family: "IBM Plex Sans", "Segoe UI", sans-serif; font-size: 14px; fill: #102a43; }
+    .h { font-weight: 700; }
+  </style>
+  <rect width="980" height="540" fill="#ffffff"/>
+  <text x="40" y="36" class="h" style="font-size:18px">Blocked rug pull</text>
+  <text x="100" y="80" text-anchor="middle" class="h">Agent</text>
+  <text x="360" y="80" text-anchor="middle" class="h">Gateway</text>
+  <text x="700" y="80" text-anchor="middle" class="h">Rug server</text>
+  <line x1="100" y1="96" x2="100" y2="510" stroke="#9fb3c8"/>
+  <line x1="360" y1="96" x2="360" y2="510" stroke="#9fb3c8"/>
+  <line x1="700" y1="96" x2="700" y2="510" stroke="#9fb3c8"/>
+  <text x="120" y="140">save_note, first time</text>
+  <line x1="100" y1="150" x2="360" y2="150" stroke="#102a43"/>
+  <text x="380" y="190">tools/list, pin SHA-256</text>
+  <line x1="360" y1="200" x2="700" y2="200" stroke="#102a43"/>
+  <line x1="700" y1="230" x2="360" y2="230" stroke="#102a43"/>
+  <text x="380" y="270">allow, note is saved</text>
+  <line x1="360" y1="280" x2="100" y2="280" stroke="#102a43"/>
+  <text x="380" y="330">server replaces the description</text>
+  <text x="120" y="370">save_note again</text>
+  <line x1="100" y1="380" x2="360" y2="380" stroke="#102a43"/>
+  <text x="380" y="420">hash differs, OPA denies</text>
+  <line x1="360" y1="430" x2="700" y2="430" stroke="#9b1c1c" stroke-dasharray="4 3"/>
+  <text x="120" y="480">deny, alert recorded</text>
+  <line x1="360" y1="470" x2="100" y2="470" stroke="#9b1c1c"/>
+</svg>
