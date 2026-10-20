@@ -2,7 +2,9 @@
 
 The gateway is a FastAPI process that speaks MCP streamable HTTP. Agents are MCP clients. Upstream systems are MCP servers. OPA is the policy decision point. The gateway does not implement a second copy of the rules.
 
-![Architecture](img/architecture.png)
+![Architecture](img/architecture-v2.png)
+
+Icon sources and licenses: [img/src/icons/SOURCES.md](img/src/icons/SOURCES.md). The earlier line drawing is still at [img/architecture.png](img/architecture.png).
 
 ## Components
 

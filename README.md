@@ -4,13 +4,17 @@ A zero-trust policy enforcement point between AI agents and [MCP](https://modelc
 
 An agent presents its own short-lived identity. The gateway checks that token, pins each server's tool list, asks OPA for a decision, and mints a **different** token for the downstream server. The agent's token is never forwarded.
 
+**Technical report (PDF):** [Agent Trust Gateway Report](docs/report/Agent-Trust-Gateway-Report.pdf)
+
 ## Problem
 
 Tool descriptions are instructions the model trusts. A server can hide directions in a description, change that description after you approved it, or copy data out through a second tool. Long-lived shared credentials make a confused deputy easy. This lab puts one enforcement point in front of synthetic MCP servers and measures it.
 
 ## Architecture
 
-![Architecture](docs/img/architecture.png)
+![Architecture](docs/img/architecture-v2.png)
+
+Icon sources and licenses: [docs/img/src/icons/SOURCES.md](docs/img/src/icons/SOURCES.md).
 
 ```mermaid
 flowchart LR

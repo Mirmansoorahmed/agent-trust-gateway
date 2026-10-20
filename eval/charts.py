@@ -21,7 +21,7 @@ CONDITION_LABELS = {
 def _grouped(path: Path, scenarios: list[str], series: dict[str, list[float]], title: str, ylabel: str) -> None:
     if not scenarios:
         return
-    fig, ax = plt.subplots(figsize=(12, 5.2))
+    fig, ax = plt.subplots(figsize=(12, 6.4))
     width = 0.18
     indexes = list(range(len(scenarios)))
     for offset, condition in enumerate(CONDITIONS):
@@ -33,10 +33,16 @@ def _grouped(path: Path, scenarios: list[str], series: dict[str, list[float]], t
     ax.set_ylim(0, 1.05)
     ax.set_ylabel(ylabel)
     ax.set_title(title)
-    ax.legend(frameon=False, ncol=4, fontsize=8)
+    ax.legend(
+        frameon=False,
+        ncol=4,
+        fontsize=8,
+        loc="upper center",
+        bbox_to_anchor=(0.5, -0.46),
+    )
     fig.tight_layout()
     path.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(path, dpi=140)
+    fig.savefig(path, dpi=140, bbox_inches="tight")
     plt.close(fig)
 
 
